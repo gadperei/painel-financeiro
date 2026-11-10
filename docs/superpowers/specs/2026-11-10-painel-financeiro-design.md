@@ -400,7 +400,7 @@ Quando uma versão nova é publicada, o app mostra "Nova versão disponível —
 - "Começar com meus dados" apaga tudo, define o mês aberto como o mês de hoje e mantém as categorias e configurações padrão.
 
 ### Backup
-- **Exportar:** gera `financas-backup-AAAA-MM-DD.json` com `{ app: "painel-financeiro", versao, exportadoEm, dados }`. A cópia de desfazer não entra. No Android, usa a tela de compartilhar do sistema (Web Share API com arquivo), o que permite mandar para o Drive ou o WhatsApp. Se não houver suporte, baixa o arquivo. Atualiza `ultimoBackup`.
+- **Exportar:** gera `financas-backup-AAAA-MM-DD.json` com `{ app: "painel-financeiro", versao, exportadoEm, dados }`. A cópia de desfazer não entra. No Android, usa a tela de compartilhar do sistema (Web Share API com arquivo), o que permite mandar para o Drive ou o WhatsApp. Se não houver suporte, baixa o arquivo. *(Ajuste após o teste no Android: o Chrome não compartilha `.json`, então no celular o arquivo vai como `financas-backup-AAAA-MM-DD.txt`, com o mesmo conteúdo; o importar aceita `.json` e `.txt`.)* Atualiza `ultimoBackup`.
 - **Importar:** o usuário escolhe o arquivo e o app:
   1. confere `app` e valida a estrutura com zod;
   2. migra se a versão for antiga; recusa se for mais nova ("backup de uma versão mais nova do app — atualize o app");
@@ -453,7 +453,7 @@ Uma passagem rápida num iPhone (de um conhecido) antes de considerar pronto.
 
 - **Repositório público** `painel-financeiro` no GitHub. A Vercel fica ligada a ele e publica a branch `main` a cada `git push`.
 - **Identidade do Git:** usar o e-mail *noreply* do GitHub, porque o e-mail dos commits fica público.
-- **`.gitignore`:** `node_modules/`, `dist/`, `.env*`, `*backup*.json`.
+- **`.gitignore`:** `node_modules/`, `dist/`, `.env*`, `*backup*.json`, `*backup*.txt`.
 - **O app não faz nenhuma requisição externa:** sem analytics, sem fontes de CDN (usa a fonte do sistema). O rodapé diz: "Seus dados ficam só neste aparelho."
 - **README em português:**
   - o que é e para quem;

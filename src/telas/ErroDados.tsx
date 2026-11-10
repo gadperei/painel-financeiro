@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { baixarArquivo, escolherArquivo } from '../componentes/arquivos';
+import { ACEITA_BACKUP, baixarArquivo, escolherArquivo } from '../componentes/arquivos';
 import { ConfirmarAcao } from '../componentes/ConfirmarAcao';
 import { lerBackup, type ResumoBackup } from '../dados/backup';
 import { comecarComMeusDados } from '../dados/operacoes';
@@ -20,7 +20,7 @@ export function ErroDados({ bruto, versaoNova, aoRecuperar }: Props) {
   const [confirmarZero, setConfirmarZero] = useState(false);
 
   async function importar() {
-    const texto = await escolherArquivo('.json,application/json');
+    const texto = await escolherArquivo(ACEITA_BACKUP);
     if (texto === null) return;
     const r = lerBackup(texto);
     if (r.tipo === 'erro') setErro(r.mensagem);

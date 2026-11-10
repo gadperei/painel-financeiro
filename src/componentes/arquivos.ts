@@ -13,13 +13,33 @@ export function baixarArquivo(nome: string, conteudo: string, tipo: string): voi
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+/** Tipos que o "Importar backup" aceita: o .json baixado e o .txt compartilhado pelo celular. */
+export const ACEITA_BACKUP = '.json,.txt,application/json,text/plain';
+
 /**
- * Usa a tela de compartilhar do aparelho quando dá (Drive, WhatsApp...); senão, baixa o arquivo.
+ * O arquivo a oferecer na tela de compartilhar, ou null para baixar.
+ * Só no celular (no computador, baixar é o esperado). Vai como .txt porque o Chrome do Android
+ * recusa compartilhar .json; o conteúdo é o mesmo e o importar lê os dois.
+ */
+export function arquivoParaCompartilhar(
+  nome: string,
+  conteudo: string,
+  celular: boolean,
+  podeCompartilhar: (arquivo: File) => boolean,
+): File | null {
+  if (!celular) return null;
+  const arquivo = new File([conteudo], nome.replace(/\.json$/, '.txt'), { type: 'text/plain' });
+  return podeCompartilhar(arquivo) ? arquivo : null;
+}
+
+/**
+ * No celular, usa a tela de compartilhar (Drive, WhatsApp...); senão, baixa o arquivo.
  * Devolve false se a pessoa cancelou o compartilhamento.
  */
 export async function compartilharOuBaixar(nome: string, conteudo: string): Promise<boolean> {
-  const arquivo = new File([conteudo], nome, { type: 'application/json' });
-  if (navigator.canShare?.({ files: [arquivo] })) {
+  const arquivo = arquivoParaCompartilhar(nome, conteudo, /Android|iPhone|iPad|iPod/i.test(navigator.userAgent),
+    (f) => !!navigator.canShare?.({ files: [f] }));
+  if (arquivo) {
     try {
       await navigator.share({ files: [arquivo], title: nome });
       return true;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { escolherArquivo, exportarBackup } from '../componentes/arquivos';
+import { ACEITA_BACKUP, escolherArquivo, exportarBackup } from '../componentes/arquivos';
 import { Card } from '../componentes/Card';
 import { CampoValor } from '../componentes/CampoValor';
 import { CampoTexto } from '../componentes/Campos';
@@ -78,7 +78,7 @@ export function Configuracoes({ aoFechar }: { aoFechar(): void }) {
   }
 
   async function importar() {
-    const texto = await escolherArquivo('.json,application/json');
+    const texto = await escolherArquivo(ACEITA_BACKUP);
     if (texto === null) return;
     const r = lerBackup(texto);
     if (r.tipo === 'erro') { setErroImportacao(r.mensagem); return; }

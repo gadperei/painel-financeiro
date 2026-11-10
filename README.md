@@ -24,7 +24,7 @@ Para quem organiza o mês em torno de **renda, contas fixas, faturas, aportes e 
 - **Gastos por categoria:** lançamento rápido em 3 toques (valor → categoria → salvar) e comparação com o mês anterior.
 - **Virada de mês:** salva o resumo no histórico, desmarca o que foi pago e avança as parcelas, com opção de **desfazer**.
 - **Histórico:** score mês a mês e evolução do caixa e das metas.
-- **Backup:** exporta um arquivo `.json`, que dá para mandar para o Drive ou o WhatsApp, e importa de volta.
+- **Backup:** no celular, abre a tela de compartilhar para mandar o arquivo para o Drive ou o WhatsApp (vai como `.txt`, porque o Chrome do Android não compartilha `.json`); no computador, baixa um `.json`. O importar aceita os dois.
 
 ## Como as contas funcionam
 
