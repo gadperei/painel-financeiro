@@ -7,9 +7,9 @@ import { marcar } from '../dados/operacoes';
 import type { Aporte, Conta, Gasto, Parcelamento, Renda } from '../dados/tipos';
 import { useApp } from '../estado/contexto';
 import { avisoDaConta } from '../regras/avisos';
-import { rotuloMesCurto } from '../regras/datas';
+import { nomeMes, rotuloMesCurto } from '../regras/datas';
 import { formatarReais } from '../regras/dinheiro';
-import { gastosDoMes } from '../regras/gastos';
+import { gastosAguardandoFechamento, gastosDoMes } from '../regras/gastos';
 import { mesDeTermino, restantes, serieAlivio, textoAlivio } from '../regras/parcelas';
 import { calcularSobraPrevista } from '../regras/projecao';
 import { FormAporte } from './formularios/FormAporte';
@@ -76,6 +76,7 @@ export function Mes() {
   const categoriasComGasto = estado.categorias.filter((c) => gastos.some((g) => g.categoriaId === c.id));
   const gastosFiltrados = filtro ? gastos.filter((g) => g.categoriaId === filtro) : gastos;
   const alivio = textoAlivio(estado.parcelamentos, mesAberto);
+  const aguardando = gastosAguardandoFechamento(estado);
   const fechar = () => setEdicao(null);
 
   return (
@@ -173,6 +174,11 @@ export function Mes() {
           </div>
         )}
         <ListaGastos gastos={gastosFiltrados} categorias={estado.categorias} aoTocar={(g) => setEdicao({ tipo: 'gasto', item: g })} />
+        {aguardando.length > 0 && (
+          <p className="aviso aviso-info">
+            {aguardando.length} {aguardando.length === 1 ? 'gasto' : 'gastos'} do mês seguinte aguardando o fechamento de {nomeMes(mesAberto)}.
+          </p>
+        )}
       </Card>
 
       <PainelInferior aberto={edicao !== null} titulo={edicao ? TITULO[edicao.tipo][edicao.item ? 1 : 0] : ''} aoFechar={fechar}>

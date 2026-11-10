@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { totaisPorCategoria, validarDataGasto } from './gastos';
+import { avisoGastoForaDoMes, gastosAguardandoFechamento, totaisPorCategoria, validarDataGasto } from './gastos';
 import { criarEstado, gasto, mesFechado } from '../testes/fabrica';
 
 describe('gastos por categoria', () => {
@@ -16,6 +16,16 @@ describe('gastos por categoria', () => {
     expect(t[0].percentual).toBeCloseTo(72.7, 1);
     expect(t[0].variacao).toBe(-20);
     expect(t[1].variacao).toBeNull();
+  });
+
+  it('gastos de depois do mês aberto aguardam o fechamento, com aviso ao salvar', () => {
+    const e = criarEstado({
+      gastos: [gasto({ id: 'n', data: '2026-11-30' }), gasto({ id: 'd1', data: '2026-12-01' }), gasto({ id: 'd2', data: '2026-12-02' })],
+    });
+    expect(gastosAguardandoFechamento(e).map((g) => g.id)).toEqual(['d1', 'd2']);
+    expect(avisoGastoForaDoMes('2026-12-01', '2026-11'))
+      .toBe('Gasto salvo. Ele aparece em dezembro, depois que você fechar novembro.');
+    expect(avisoGastoForaDoMes('2026-11-30', '2026-11')).toBeNull();
   });
 
   it('data do gasto: do 1º dia do mês aberto até hoje', () => {

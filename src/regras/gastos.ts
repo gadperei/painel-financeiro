@@ -1,4 +1,4 @@
-import { mesDe, primeiroDia, type Dia, type Mes } from './datas';
+import { mesDe, nomeMes, primeiroDia, type Dia, type Mes } from './datas';
 import type { Centavos } from './dinheiro';
 import { ID_OUTROS } from '../dados/padroes';
 import type { Categoria, Estado, Gasto } from '../dados/tipos';
@@ -45,6 +45,18 @@ export function totaisPorCategoria(e: Estado, mes: Mes): TotalCategoria[] {
       };
     })
     .sort((a, b) => b.total - a.total);
+}
+
+/** Gastos com data depois do mês aberto: aparecem nas telas só depois do fechamento. */
+export function gastosAguardandoFechamento(e: Estado): Gasto[] {
+  return e.gastos.filter((g) => mesDe(g.data) > e.mesAberto);
+}
+
+/** Mensagem ao salvar um gasto de depois do mês aberto (senão ele "some" das telas até o fechamento). */
+export function avisoGastoForaDoMes(data: Dia, mesAberto: Mes): string | null {
+  const mes = mesDe(data);
+  if (mes <= mesAberto) return null;
+  return `Gasto salvo. Ele aparece em ${nomeMes(mes)}, depois que você fechar ${nomeMes(mesAberto)}.`;
 }
 
 /** A data de um gasto vai do 1º dia do mês aberto até hoje. */

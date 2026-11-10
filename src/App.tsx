@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { BarraAbas, type Aba } from './componentes/BarraAbas';
 import { PainelInferior } from './componentes/PainelInferior';
 import { Toast } from './componentes/Toast';
-import { excluirItem, type Colecao } from './dados/operacoes';
+import { excluirComDesfazer, type Colecao } from './dados/operacoes';
 import { ContextoApp, type AcaoAviso, type ValorApp } from './estado/contexto';
 import { useEstado } from './estado/useEstado';
 import { useHoje } from './estado/useHoje';
@@ -50,9 +50,10 @@ export default function App() {
       atualizar,
       substituir,
       excluir(colecao: Colecao, id: string) {
-        const anterior = estado;
-        atualizar((e) => excluirItem(e, colecao, id));
-        avisar('Item excluído', { rotulo: 'Desfazer', aoClicar: () => substituir(anterior) });
+        // O desfazer devolve só o item excluído: o que a pessoa mudar nesses 5 s é mantido.
+        const { estado: semItem, desfazer } = excluirComDesfazer(estado, colecao, id);
+        atualizar(() => semItem);
+        avisar('Item excluído', { rotulo: 'Desfazer', aoClicar: () => atualizar(desfazer) });
       },
       abrirConfig: () => setConfigAberta(true),
       abrirNovoGasto: () => setNovoGasto(true),

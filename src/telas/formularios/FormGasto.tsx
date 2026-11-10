@@ -6,7 +6,7 @@ import { ID_OUTROS } from '../../dados/padroes';
 import type { Gasto } from '../../dados/tipos';
 import { useApp } from '../../estado/contexto';
 import { primeiroDia } from '../../regras/datas';
-import { validarDataGasto } from '../../regras/gastos';
+import { avisoGastoForaDoMes, validarDataGasto } from '../../regras/gastos';
 import { erroValor } from '../../regras/validacao';
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
 
 /** Lançar ou editar um gasto: valor → categoria → salvar. */
 export function FormGasto({ gasto, aoFechar }: Props) {
-  const { estado, hoje, atualizar, excluir } = useApp();
+  const { estado, hoje, atualizar, excluir, avisar } = useApp();
   const [valor, setValor] = useState(gasto?.valor ?? 0);
   const [categoriaId, setCategoriaId] = useState(gasto?.categoriaId ?? estado.categorias[0]?.id ?? ID_OUTROS);
   const [data, setData] = useState(gasto?.data ?? hoje);
@@ -32,6 +32,8 @@ export function FormGasto({ gasto, aoFechar }: Props) {
     const item: Gasto = { id: gasto?.id ?? novoId(), data, valor, categoriaId };
     if (descricao.trim()) item.descricao = descricao.trim();
     atualizar((e) => salvarItem(e, 'gastos', item));
+    const aviso = avisoGastoForaDoMes(data, estado.mesAberto);
+    if (aviso) avisar(aviso);
     aoFechar();
   }
 

@@ -39,7 +39,40 @@ export function excluirItem(e: Estado, colecao: Colecao, id: string): Estado {
   return { ...e, [colecao]: lista.filter((x) => x.id !== id) };
 }
 
-const CAMPO_DA_MARCACAO = { rendas: 'recebidaEm', contas: 'pagaEm', aportes: 'feitoEm' } as const;
+/**
+ * Exclui e devolve como desfazer só essa exclusão: o item volta para a mesma posição e as ligações
+ * desfeitas (gastos movidos para "Outros", aplicações e aportes sem meta) são refeitas.
+ * Mudanças feitas depois da exclusão são mantidas.
+ */
+export function excluirComDesfazer(e: Estado, colecao: Colecao, id: string): { estado: Estado; desfazer(atual: Estado): Estado } {
+  const lista = e[colecao] as { id: string }[];
+  const indice = lista.findIndex((x) => x.id === id);
+  const estado = excluirItem(e, colecao, id);
+  if (indice < 0 || estado === e) return { estado, desfazer: (atual) => atual };
+
+  const item = lista[indice];
+  const gastosMovidos = new Set(colecao === 'categorias' ? e.gastos.filter((g) => g.categoriaId === id).map((g) => g.id) : []);
+  const desligadas = new Set(colecao === 'metas' ? e.aplicacoes.filter((a) => a.metaId === id).map((a) => a.id) : []);
+  const aportesDesligados = new Set(colecao === 'metas' ? e.aportes.filter((a) => a.metaId === id).map((a) => a.id) : []);
+
+  const desfazer = (atual: Estado): Estado => {
+    const listaAtual = atual[colecao] as { id: string }[];
+    if (listaAtual.some((x) => x.id === id)) return atual;
+    const nova = [...listaAtual];
+    nova.splice(Math.min(indice, nova.length), 0, item);
+    const religado: Estado = {
+      ...atual,
+      gastos: atual.gastos.map((g) => (gastosMovidos.has(g.id) && g.categoriaId === ID_OUTROS ? { ...g, categoriaId: id } : g)),
+      aplicacoes: atual.aplicacoes.map((a) => (desligadas.has(a.id) && a.metaId === null ? { ...a, metaId: id } : a)),
+      aportes: atual.aportes.map((a) => (aportesDesligados.has(a.id) && a.metaId === null ? { ...a, metaId: id } : a)),
+    };
+    // Por último, para não ser sobrescrito quando a própria coleção é gastos, aplicações ou aportes.
+    return { ...religado, [colecao]: nova };
+  };
+  return { estado, desfazer };
+}
+
+const CAMPO_DA_MARCACAO ={ rendas: 'recebidaEm', contas: 'pagaEm', aportes: 'feitoEm' } as const;
 
 /** Marca (com a data) ou desmarca (null) "recebi", "pago" ou "feito". */
 export function marcar(e: Estado, colecao: 'rendas' | 'contas' | 'aportes', id: string, data: Dia | null): Estado {
