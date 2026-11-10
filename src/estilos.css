@@ -382,3 +382,9 @@ form .chips { margin-bottom: 0; }
 .legenda-simples { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 0.8rem; color: var(--texto-suave); margin: 4px 0 0; }
 .legenda-simples .bolinha { margin-left: 8px; }
 .traco { display: inline-block; width: 18px; border-top: 2px dashed var(--vermelho); margin-left: 8px; }
+
+/* ---------- Histórico ---------- */
+.detalhe-mes { display: flex; flex-direction: column; gap: 12px; }
+.detalhe-mes h3 { font-size: 0.95rem; margin: 6px 0 0; }
+.detalhe-mes .totais { margin-top: 0; padding-top: 0; border-top: 0; font-weight: 400; }
+.linha-toque .selo { flex: none; }
