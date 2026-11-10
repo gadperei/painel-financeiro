@@ -86,14 +86,14 @@ export function gerarExemplo(hoje: Dia): Estado {
     ],
     contas: [
       { id: 'ex-conta-aluguel', nome: 'Aluguel', dia: 10, valor: 150000, pagaEm: ate(10) },
-      { id: 'ex-conta-internet', nome: 'Internet', dia: 7, valor: 11990, pagaEm: null },
+      { id: 'ex-conta-internet', nome: 'Internet', dia: 7, valor: 11990, pagaEm: ate(7) },
       { id: 'ex-conta-cartao', nome: 'Cartão de crédito', dia: 15, valor: 98000, pagaEm: ate(15) },
       { id: 'ex-conta-luz', nome: 'Luz', dia: 20, valor: 18500, pagaEm: ate(20) },
       { id: 'ex-conta-celular', nome: 'Celular', dia: 25, valor: 5990, pagaEm: null },
       { id: 'ex-conta-academia', nome: 'Academia', dia: null, valor: 9990, pagaEm: null },
     ],
     aplicacoes: [
-      { id: 'ex-apl-conta', nome: 'Conta corrente', saldo: 250000, tipo: 'operacional', metaId: null, percentualCdi: null },
+      { id: 'ex-apl-conta', nome: 'Conta corrente', saldo: 450000, tipo: 'operacional', metaId: null, percentualCdi: null },
       { id: 'ex-apl-reserva', nome: 'CDB liquidez diária', saldo: 450000, tipo: 'guardado', metaId: 'ex-meta-reserva', percentualCdi: 100 },
       { id: 'ex-apl-viagem', nome: 'Caixinha da viagem', saldo: 120000, tipo: 'guardado', metaId: 'ex-meta-viagem', percentualCdi: 110 },
     ],
