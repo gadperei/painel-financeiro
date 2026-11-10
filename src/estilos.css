@@ -389,3 +389,11 @@ form .chips { margin-bottom: 0; }
 .detalhe-mes .totais { margin-top: 0; padding-top: 0; border-top: 0; font-weight: 400; }
 .linha-toque .selo { flex: none; }
 .botao-largo { width: 100%; margin-top: 8px; }
+
+/* ---------- PWA ---------- */
+.faixa-atualizacao { display: flex; align-items: center; gap: 10px; padding: 8px 12px 8px 16px; background: var(--primaria-suave); font-weight: 600; }
+.faixa-atualizacao span { flex: 1; }
+.aviso-instalacao p { margin: 0; }
+.aviso-instalacao .botoes { margin-top: 10px; }
+.como-instalar h3 { font-size: 0.95rem; margin: 8px 0 4px; }
+.como-instalar ol { margin: 0 0 8px; padding-left: 20px; }

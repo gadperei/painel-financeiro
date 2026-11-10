@@ -13,6 +13,8 @@ import { Inicio } from './telas/Inicio';
 import { Mes } from './telas/Mes';
 import { Metas } from './telas/Metas';
 import { FormGasto } from './telas/formularios/FormGasto';
+import { AvisoAtualizacao } from './pwa/AvisoAtualizacao';
+import { AvisoInstalacao } from './pwa/AvisoInstalacao';
 
 const TITULOS: Record<Aba, string> = {
   inicio: 'Painel Financeiro',
@@ -71,6 +73,7 @@ export default function App() {
   return (
     <ContextoApp.Provider value={valor}>
       <div className="app">
+        <AvisoAtualizacao />
         {erroSalvar && (
           <p className="faixa-erro" role="alert">Não consegui salvar. Exporte um backup.</p>
         )}
@@ -86,6 +89,7 @@ export default function App() {
               </button>
             </header>
             <main className="conteudo">
+              {aba === 'inicio' && <AvisoInstalacao />}
               {aba === 'inicio' && <Inicio />}
               {aba === 'mes' && <Mes />}
               {aba === 'metas' && <Metas />}

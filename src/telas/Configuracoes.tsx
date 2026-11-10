@@ -14,6 +14,7 @@ import { desfazerFechamento } from '../regras/fechamento';
 import { lerDecimal, lerInteiro } from '../regras/validacao';
 import { formatarData } from './formato';
 import { FormCategoria } from './formularios/FormCategoria';
+import { ComoInstalar } from '../pwa/ComoInstalar';
 
 type Confirmacao = 'desfazer' | 'apagar' | 'exemplo' | null;
 
@@ -63,6 +64,7 @@ export function Configuracoes({ aoFechar }: { aoFechar(): void }) {
   const [erroImportacao, setErroImportacao] = useState<string | null>(null);
   const [confirmacao, setConfirmacao] = useState<Confirmacao>(null);
   const [persistente, setPersistente] = useState<boolean | null>(null);
+  const [instrucoes, setInstrucoes] = useState(false);
 
   useEffect(() => {
     navigator.storage?.persisted?.().then(setPersistente).catch(() => setPersistente(false));
@@ -132,6 +134,10 @@ export function Configuracoes({ aoFechar }: { aoFechar(): void }) {
           <p className="suave">Seus dados ficam só neste aparelho. Instalar o app na tela inicial ajuda a protegê-los.</p>
         </Card>
 
+        <Card titulo="Instalar no celular">
+          <button type="button" className="botao botao-secundario botao-largo" onClick={() => setInstrucoes(true)}>Como instalar no celular</button>
+        </Card>
+
         <Card titulo="Cuidado">
           <div className="lista-botoes">
             {estado.copiaAntesDoFechamento && (
@@ -148,6 +154,10 @@ export function Configuracoes({ aoFechar }: { aoFechar(): void }) {
           <FormCategoria key={categoria === 'nova' ? 'nova' : categoria.id} categoria={categoria === 'nova' ? undefined : categoria}
             aoFechar={() => setCategoria(null)} />
         )}
+      </PainelInferior>
+
+      <PainelInferior aberto={instrucoes} titulo="Como instalar no celular" aoFechar={() => setInstrucoes(false)}>
+        <ComoInstalar />
       </PainelInferior>
 
       <ConfirmarAcao
