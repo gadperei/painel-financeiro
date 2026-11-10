@@ -16,6 +16,16 @@ export function lerInteiro(texto: string, min: number, max: number): number | nu
   return n >= min && n <= max ? n : null;
 }
 
+/** Número com vírgula ou ponto decimal (sem separador de milhar). Vazio = não informado (null, sem erro). */
+export function lerDecimal(texto: string, min: number, max: number): { valor: number | null; erro: string | null } {
+  const t = texto.trim();
+  if (!t) return { valor: null, erro: null };
+  const invalido = { valor: null, erro: 'Número inválido' };
+  if (!/^\d+([.,]\d{1,2})?$/.test(t)) return invalido;
+  const n = Number(t.replace(',', '.'));
+  return n >= min && n <= max ? { valor: n, erro: null } : invalido;
+}
+
 /** Dia do mês: vazio = "sem dia fixo" (null, sem erro). */
 export function lerDia(texto: string): { dia: number | null; erro: string | null } {
   if (!texto.trim()) return { dia: null, erro: null };

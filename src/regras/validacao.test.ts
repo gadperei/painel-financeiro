@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { erroNome, erroValor, lerDia, lerInteiro } from './validacao';
+import { erroNome, erroValor, lerDecimal, lerDia, lerInteiro } from './validacao';
 
 describe('validação de formulários', () => {
   it('nome obrigatório depois de tirar espaços', () => {
@@ -18,6 +18,15 @@ describe('validação de formulários', () => {
     expect(lerDia('0')).toEqual({ dia: null, erro: 'Dia entre 1 e 31' });
     expect(lerDia('32')).toEqual({ dia: null, erro: 'Dia entre 1 e 31' });
     expect(lerDia('5,5')).toEqual({ dia: null, erro: 'Dia entre 1 e 31' });
+  });
+
+  it('decimal com vírgula; vazio é "não informado"', () => {
+    expect(lerDecimal('14,9', 0, 1000)).toEqual({ valor: 14.9, erro: null });
+    expect(lerDecimal('110', 0, 1000)).toEqual({ valor: 110, erro: null });
+    expect(lerDecimal('  ', 0, 1000)).toEqual({ valor: null, erro: null });
+    expect(lerDecimal('abc', 0, 1000)).toEqual({ valor: null, erro: 'Número inválido' });
+    expect(lerDecimal('-1', 0, 1000)).toEqual({ valor: null, erro: 'Número inválido' });
+    expect(lerDecimal('1.000', 0, 1000)).toEqual({ valor: null, erro: 'Número inválido' });
   });
 
   it('inteiro dentro de limites', () => {

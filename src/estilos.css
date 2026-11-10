@@ -364,3 +364,21 @@ p { margin: 0 0 8px; }
 /* ---------- formulários ---------- */
 .grade-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
 form .chips { margin-bottom: 0; }
+
+/* ---------- Metas e simulador ---------- */
+.metas { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.meta { display: flex; align-items: flex-start; gap: 6px; border-bottom: 1px solid var(--borda); padding-bottom: 10px; }
+.meta:last-child { border-bottom: 0; }
+.meta-corpo { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; background: none; border: 0; padding: 4px 0; text-align: left; cursor: pointer; }
+.meta-topo, .meta-detalhe { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.meta-detalhe { font-size: 0.84rem; color: var(--texto-suave); }
+.meta .selo { align-self: flex-start; }
+.totais { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin-top: 10px; padding-top: 10px; border-top: 2px solid var(--borda); font-weight: 700; }
+.chip-cor { padding: 0 10px; }
+.bolinha-grande { width: 22px; height: 22px; }
+.entrada-leitura { display: flex; align-items: center; background: var(--superficie-2); }
+.resultado-simulacao { line-height: 1.55; }
+.grafico-simulador { margin: 8px 0; }
+.legenda-simples { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 0.8rem; color: var(--texto-suave); margin: 4px 0 0; }
+.legenda-simples .bolinha { margin-left: 8px; }
+.traco { display: inline-block; width: 18px; border-top: 2px dashed var(--vermelho); margin-left: 8px; }
