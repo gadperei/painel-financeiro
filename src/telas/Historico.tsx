@@ -69,7 +69,7 @@ export function Historico() {
             <ResponsiveContainer width="100%" height={240}>
               <ComposedChart data={dadosEvolucao} margin={{ top: 10, right: 16, left: 0, bottom: 0 }}>
                 <XAxis dataKey="mes" tickLine={false} axisLine={false} tick={eixo} />
-                <YAxis width={64} tickFormatter={reaisCurto} tick={{ ...eixo, fontSize: 10 }} axisLine={false} tickLine={false} />
+                <YAxis width={78} tickFormatter={reaisCurto} tick={{ ...eixo, fontSize: 10 }} axisLine={false} tickLine={false} />
                 <Tooltip formatter={(v: unknown) => formatarReais(Number(v))} labelStyle={{ color: '#18202f' }} />
                 <Legend wrapperStyle={{ fontSize: 12 }} />
                 <Bar dataKey="sobra" name="Sobra do mês" fill="var(--primaria)" fillOpacity={0.25} isAnimationActive={false} />

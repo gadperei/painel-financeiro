@@ -75,7 +75,7 @@ export function Simulador({ meta }: { meta: Meta }) {
           <ResponsiveContainer width="100%" height={220}>
             <ComposedChart data={dados} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
               <XAxis dataKey="mes" interval={Math.max(0, Math.floor(dados.length / 5))} tickLine={false} tick={{ fontSize: 11, fill: 'var(--texto-suave)' }} />
-              <YAxis width={64} tickFormatter={reaisCurto} tick={{ fontSize: 10, fill: 'var(--texto-suave)' }} axisLine={false} tickLine={false} />
+              <YAxis width={78} tickFormatter={reaisCurto} tick={{ fontSize: 10, fill: 'var(--texto-suave)' }} axisLine={false} tickLine={false} />
               <Tooltip formatter={(v: unknown) => formatarReais(Number(v))} labelStyle={{ color: '#18202f' }} />
               <ReferenceLine y={alvo} stroke="var(--vermelho)" strokeDasharray="5 4" />
               <Area type="monotone" dataKey="comJuros" name="Com juros" stroke="var(--primaria)" fill="var(--primaria)" fillOpacity={0.15} strokeWidth={2} isAnimationActive={false} />
