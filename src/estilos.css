@@ -388,3 +388,4 @@ form .chips { margin-bottom: 0; }
 .detalhe-mes h3 { font-size: 0.95rem; margin: 6px 0 0; }
 .detalhe-mes .totais { margin-top: 0; padding-top: 0; border-top: 0; font-weight: 400; }
 .linha-toque .selo { flex: none; }
+.botao-largo { width: 100%; margin-top: 8px; }
