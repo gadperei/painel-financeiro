@@ -12,6 +12,7 @@ import { Historico } from './telas/Historico';
 import { Inicio } from './telas/Inicio';
 import { Mes } from './telas/Mes';
 import { Metas } from './telas/Metas';
+import { FormGasto } from './telas/formularios/FormGasto';
 
 const TITULOS: Record<Aba, string> = {
   inicio: 'Painel Financeiro',
@@ -98,7 +99,7 @@ export default function App() {
         {!configAberta && <BarraAbas aba={aba} aoTrocar={setAba} aoNovoGasto={() => setNovoGasto(true)} />}
 
         <PainelInferior aberto={novoGasto} titulo="Novo gasto" aoFechar={() => setNovoGasto(false)}>
-          <p className="vazio">Em construção.</p>
+          <FormGasto aoFechar={() => setNovoGasto(false)} />
         </PainelInferior>
 
         {aviso && (

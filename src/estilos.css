@@ -360,3 +360,7 @@ p { margin: 0 0 8px; }
 .resumo-fechamento { display: flex; flex-direction: column; gap: 10px; }
 .resumo-fechamento p { margin: 0; }
 .lista-simples { margin: 4px 0 8px; padding-left: 20px; }
+
+/* ---------- formulários ---------- */
+.grade-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+form .chips { margin-bottom: 0; }
