@@ -8,6 +8,7 @@ Pontos menores encontrados na revisão final da v1. Nenhum deles impede o uso do
 - [ ] **Rede de segurança:** falta um ErrorBoundary que, se alguma tela quebrar, ofereça "Baixar dados brutos".
 - [ ] **Referências quebradas vindas de backup:** gastos de categoria que não existe mais não entram no chip "Outros", e uma meta inexistente aparece como "Nenhuma". Normalizar depois de migrar.
 - [ ] **Seletor de arquivo:** não trata falha de leitura nem limita o tamanho do arquivo.
+- [ ] **PIN para abrir o app:** hoje quem pega o celular desbloqueado vê tudo. Um PIN opcional protegeria os dados.
 - [ ] **Dados reais digitados no modo exemplo:** ficam sem lembrete de backup e são apagados pelo "Começar com meus dados".
 
 ## Quando existir a v2 do formato de dados
